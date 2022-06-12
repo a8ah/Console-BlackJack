@@ -8,10 +8,17 @@ public class Player {
     private int deckValue;
     private String deckAsString=null;
     private ArrayList<Card> deck = new ArrayList<>();
+    private boolean hasAnAce = false;
 
     public Player(String name){
         this.name = name;
         this.deckValue = 0;
+    }
+    public boolean hasAnAce() {
+        return hasAnAce;
+    }
+    public void setHasAnAce(boolean hasAnAce) {
+        this.hasAnAce = hasAnAce;
     }
     public String getDeckAsString() {
         return deckAsString;
@@ -26,6 +33,10 @@ public class Player {
     }
 
     public void setDeckValue(int deckValue) {
+        this.deckValue = deckValue;
+    }
+
+    public void incraseDeckValue(int deckValue) {
         this.deckValue += deckValue;
     }
 

@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.example.blackjack.Bussines.Desk;
 import com.example.blackjack.Model.Card;
+import com.example.blackjack.Model.CardName;
 import com.example.blackjack.Model.Dealer;
 import com.example.blackjack.Model.GameStatus;
 import com.example.blackjack.Model.Player;
@@ -93,17 +94,25 @@ public class Game {
         for (Player player : desk.getPlayers()) {
             Card card = desk.getCard();
             player.getDeck().add(card);
-            player.setDeckValue(card.getValue());
+            player.incraseDeckValue(card.getValue());
             player.setDeckAsString(card.getFullName());
             System.out.println("Dealing to " + player.getName() + ", card: " + player.getDeckAsString());
+
+            if(card.getName()==CardName.ACE){
+                player.setHasAnAce(true);
+            }
         }
 
         // Card face Down to Dealer
         Card card = desk.getCard();
         desk.getDealer().getDeck().add(card);
-        desk.getDealer().setDeckValue(card.getValue());
+        desk.getDealer().incraseDeckValue(card.getValue());
         desk.getDealer().setDeckAsString(card.getFullName());
         System.out.println("Dealing to " + desk.getDealer().getName() + ", card: face down");
+        
+        if(card.getName()==CardName.ACE){
+            desk.getDealer().setHasAnAce(true);
+        }
     }
 
     private void finalRoundForPlayers() {
@@ -116,13 +125,21 @@ public class Game {
             do {
                 Card card = desk.getCard();
                 player.getDeck().add(card);
-                player.setDeckValue(card.getValue());
+                player.incraseDeckValue(card.getValue());
                 player.setDeckAsString(card.getFullName());
 
                 System.out.println("Dealing to " + player.getName() + ", cards: " + player.getDeckAsString());
 
+                if(card.getName()==CardName.ACE){
+                    player.setHasAnAce(true);
+                }
+
+                if( player.getDeck().size()>=2 && player.hasAnAce()){
+                    player.setDeckValue(this.recalculateDeckValue(player));
+                }
+
                 if (player.getDeckValue() == 21){
-                    System.out.println( player.getName() + "has a BLACKJAC");
+                    System.out.println( player.getName() + " has a BLACKJAC");
                     standOrder = true;
                 } else if (player.getDeckValue() > 21) {
                     bustedPlayers.add(player);
@@ -168,7 +185,7 @@ public class Game {
         do {
             Card card = desk.getCard();            
             desk.getDealer().getDeck().add(card);
-            desk.getDealer().setDeckValue(card.getValue());
+            desk.getDealer().incraseDeckValue(card.getValue());
             desk.getDealer().setDeckAsString(card.getFullName());
             System.out.println("Dealing to " + desk.getDealer().getName() + ", cards: " + desk.getDealer().getDeckAsString());
 
@@ -193,7 +210,7 @@ public class Game {
 
                 int playerDeckValue = player.getDeckValue();
                 System.out.println(
-                        "Scoring" + player.getName() + " has " + playerDeckValue + " , dealere has " + dealerDeckValue);
+                        "Scoring " + player.getName() + " has " + playerDeckValue + " , dealere has " + dealerDeckValue);
                 if (playerDeckValue <= dealerDeckValue) {
                     System.out.println(" Dealer WIN to " + player.getName());
                     bustedPlayers.add(player);
@@ -250,4 +267,38 @@ public class Game {
         }
 
     }
+
+    private int recalculateDeckValue(Player player){
+        
+        int recalculateDeckValue = 0;
+
+        for (Card card : player.getDeck()) {
+            if(card.getName()== CardName.ACE){
+                int cardValue = 0;
+                do {
+                    System.out.println("Enter " + card.getName().getName() + " " + card.getShape().getName() + " value");
+                    String inputCardValue = sc.next();
+
+                    switch (inputCardValue) {
+                        case "1", "11":
+                            cardValue = Integer.parseInt(inputCardValue);;
+                            break;
+
+                        default:
+                            System.out.println("Wrong input value. Trie again.");
+                            break;
+                    }
+
+                } while (cardValue==0);
+                recalculateDeckValue +=cardValue;
+            }else{
+                recalculateDeckValue += card.getValue();
+            }
+        }
+        
+        return recalculateDeckValue;
+
+    }
+
+    
 }
