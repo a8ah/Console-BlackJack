@@ -15,10 +15,17 @@ public  class Card {
                 value = 11;
                 break;
             
-            case J,Q,K: 
+            case J: 
+                value = 10;
+                break;
+
+            case Q: 
                 value = 10;
                 break;
         
+            case K: 
+                value = 10;
+                break;
             default:
                 value =  Integer. parseInt(cardName.getName()); 
                 break;
