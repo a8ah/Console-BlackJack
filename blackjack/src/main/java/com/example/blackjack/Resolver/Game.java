@@ -189,6 +189,14 @@ public class Game {
             desk.getDealer().setDeckAsString(card.getFullName());
             System.out.println("Dealing to " + desk.getDealer().getName() + ", cards: " + desk.getDealer().getDeckAsString());
 
+            if(card.getName()==CardName.ACE){
+                desk.getDealer().setHasAnAce(true);
+            }
+
+            if( desk.getDealer().getDeckValue()> 21 && desk.getDealer().hasAnAce()){
+                desk.getDealer().setDeckValue(this.recalculateDealerDeckValue(desk.getDealer()));
+            }
+
             if(desk.getDealer().getDeckValue() == 21){
                 System.out.println( desk.getDealer().getName() + " has a BLACKJAC, ");
                 standOrder =true;
@@ -196,6 +204,7 @@ public class Game {
             }else if (desk.getDealer().getDeckValue() > 16) {
                 standOrder = true;
             }
+
         } while (!standOrder);
     }
 
@@ -300,5 +309,30 @@ public class Game {
 
     }
 
-    
+    private int recalculateDealerDeckValue(Dealer dealer){
+
+        int valueOfNoAceCards = 0;
+
+        ArrayList<Card> aceCards = new ArrayList<>();
+
+        for (Card card : dealer.getDeck()) {
+            
+            if( card.getName()==CardName.ACE)
+                aceCards.add(card);
+            else
+                valueOfNoAceCards += card.getValue();
+        }
+
+
+        for(int i=0; i< aceCards.size();i++){
+            if((valueOfNoAceCards+ 11 > 21) ||  (valueOfNoAceCards+ 11 + aceCards.size()-i+1 > 21))
+                valueOfNoAceCards ++;
+            else
+            valueOfNoAceCards +=11;
+        }
+
+        return valueOfNoAceCards;
+
+    }
+
 }
