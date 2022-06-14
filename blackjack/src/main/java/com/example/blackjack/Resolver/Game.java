@@ -343,4 +343,12 @@ public class Game {
 
     }
 
+    public Desk getDesk() {
+        return desk;
+    }
+
+    public void setDesk(Desk desk) {
+        this.desk = desk;
+    }
+
 }

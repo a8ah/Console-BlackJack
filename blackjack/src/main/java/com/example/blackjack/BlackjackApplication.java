@@ -1,8 +1,4 @@
 package com.example.blackjack;
-
-import java.util.Scanner;
-
-import com.example.blackjack.Bussines.Desk;
 import com.example.blackjack.Resolver.Game;
 
 import org.springframework.boot.SpringApplication;

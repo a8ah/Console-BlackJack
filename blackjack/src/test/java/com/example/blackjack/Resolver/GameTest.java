@@ -26,18 +26,18 @@ class GameTest {
     @Test
     void initialRound(){
         game = new Game();
-        desk = new Desk(3);
+        game.setDesk(new Desk(3));
 
         game.initialRound();
-        assertNotNull(desk.getPlayers().get(0).getDeck().size());
-        assertEquals(1,desk.getPlayers().get(0).getDeck().size());
-        assertNotNull(desk.getPlayers().get(1).getDeck().size());
-        assertEquals(1,desk.getPlayers().get(1).getDeck().size());
-        assertNotNull(desk.getPlayers().get(2).getDeck().size());
-        assertEquals(1,desk.getPlayers().get(2).getDeck().size());
+        assertNotNull(game.getDesk().getPlayers().get(0).getDeck().size());
+        assertEquals(1,game.getDesk().getPlayers().get(0).getDeck().size());
+        assertNotNull(game.getDesk().getPlayers().get(1).getDeck().size());
+        assertEquals(1,game.getDesk().getPlayers().get(1).getDeck().size());
+        assertNotNull(game.getDesk().getPlayers().get(2).getDeck().size());
+        assertEquals(1,game.getDesk().getPlayers().get(2).getDeck().size());
 
-        assertNotNull(desk.getDealer().getDeck().size());
-        assertEquals(1,desk.getDealer().getDeck().size());
+        assertNotNull(game.getDesk().getDealer().getDeck().size());
+        assertEquals(1,game.getDesk().getDealer().getDeck().size());
     }
 
 }
