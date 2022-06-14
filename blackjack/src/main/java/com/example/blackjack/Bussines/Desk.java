@@ -18,6 +18,8 @@ public class Desk {
     private ArrayList<Player> players;
     private ArrayList<Card> deck = new  ArrayList<>();
 
+    public Desk(){}
+
     public Desk(int totalPlayers) {
 
         dealer = new Dealer();
@@ -52,7 +54,7 @@ public class Desk {
         return players;
     }
 
-    private void generateDeckCards() {
+    public void generateDeckCards() {
 
         // Getting the Shapes List
         List<Shape> shapes = Arrays.stream(Shape.values()).collect(Collectors.toList());
@@ -80,5 +82,9 @@ public class Desk {
 
     public void bustPlayer(Player player){
         players.remove(player);
+    }
+
+    public ArrayList<Card> getDeck() {
+        return deck;
     }
 }

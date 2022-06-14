@@ -55,8 +55,4 @@ public class Player {
     public void setDeck(ArrayList<Card> deck) {
         this.deck = deck;
     }
-
-    // public void updateDeckValue(){
-
-    // }
 }

@@ -17,7 +17,15 @@ public class Game {
     private Boolean dealerWin = Boolean.FALSE;
 
     public Game() {
-        this.gameStatus = GameStatus.NOTSTARTED;
+        this.setGameStatus(GameStatus.NOTSTARTED);
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    public void setGameStatus(GameStatus gameStatus) {
+        this.gameStatus = gameStatus;
     }
 
     public void startGame() {
@@ -55,11 +63,11 @@ public class Game {
 
         System.out.println("Preparing the Desk....");
         this.desk = new Desk(totalOfPlayers);
-        this.gameStatus = GameStatus.READY;
+        this.setGameStatus(GameStatus.READY);
     }
 
     public void playGame() {
-        this.gameStatus = GameStatus.STARTED;
+        this.setGameStatus(GameStatus.STARTED);
 
         System.out.println(
                 "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n  " +
@@ -90,7 +98,7 @@ public class Game {
 
     }
 
-    private void initialRound() {
+    public void initialRound() {
         for (Player player : desk.getPlayers()) {
             Card card = desk.getCard();
             player.getDeck().add(card);
